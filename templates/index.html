@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SERENA - Boat Interface</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    
+    <!-- Font Imports -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Socket.io -->
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">⚓ SERENA</div>
+            <div class="status-indicators">
+                <div class="status-indicator">
+                    <div class="status-dot online" id="systemStatus"></div>
+                    <span id="connectionStatus">Connected</span>
+                </div>
+                <div class="status-indicator">
+                    <div class="current-time" id="currentTime">00:00</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <button class="nav-btn active" data-page="navigation" title="Navigation">
+                <img src="./Imagenes/location.png" alt="Navigation">
+            </button>
+            <button class="nav-btn" data-page="temperature" title="Temperature">
+                <img src="./Imagenes/temperature.png" alt="Temperature">
+            </button>
+            <button class="nav-btn" data-page="battery" title="Battery">
+                <img src="./Imagenes/Battery side bar.png" alt="Battery">
+            </button>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Navigation Panel -->
+            <div class="content-panel" id="navigationPanel">
+                <div class="map-container">
+                    <div id="map"></div>
+                    <div class="map-overlay">
+                        <div class="coordinate-display">
+                            <div class="coordinate-item">
+                                <span class="coordinate-label">Latitude:</span>
+                                <span class="coordinate-value" id="latitude">40.7128°</span>
+                            </div>
+                            <div class="coordinate-item">
+                                <span class="coordinate-label">Longitude:</span>
+                                <span class="coordinate-value" id="longitude">-74.0060°</span>
+                            </div>
+                            <div class="coordinate-item">
+                                <span class="coordinate-label">Speed:</span>
+                                <span class="coordinate-value" id="currentSpeed">0.0 kt</span>
+                            </div>
+                            <div class="coordinate-item">
+                                <span class="coordinate-label">Heading:</span>
+                                <span class="coordinate-value" id="heading">0°</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Temperature Panel -->
+            <div class="content-panel" id="temperaturePanel" style="display: none;">
+                <div class="temperature-display">
+                    <div class="temp-readings">
+                        <div class="temp-card">
+                            <div class="temp-icon">🌡️</div>
+                            <div class="temp-value" id="airTemp">22°</div>
+                            <div class="temp-label">Air Temperature</div>
+                        </div>
+                        <div class="temp-card">
+                            <div class="temp-icon">🌊</div>
+                            <div class="temp-value" id="waterTemp">18°</div>
+                            <div class="temp-label">Water Temperature</div>
+                        </div>
+                        <div class="temp-card">
+                            <div class="temp-icon">🔥</div>
+                            <div class="temp-value" id="engineTemp">85°</div>
+                            <div class="temp-label">Engine Temperature</div>
+                        </div>
+                        <div class="temp-card">
+                            <div class="temp-icon">💨</div>
+                            <div class="temp-value" id="humidity">65%</div>
+                            <div class="temp-label">Humidity</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Battery Panel -->
+            <div class="content-panel" id="batteryPanel" style="display: none;">
+                <div class="battery-display">
+                    <div class="battery-main">
+                        <div class="battery-visual">
+                            <div class="battery-terminal"></div>
+                            <div class="battery-level" id="batteryLevel" style="height: 85%;"></div>
+                        </div>
+                        <div class="battery-percentage" id="batteryPercentage">85%</div>
+                    </div>
+                    <div class="battery-stats">
+                        <div class="temp-card">
+                            <div class="temp-icon">⚡</div>
+                            <div class="temp-value" id="batteryVoltage">12.6V</div>
+                            <div class="temp-label">Voltage</div>
+                        </div>
+                        <div class="temp-card">
+                            <div class="temp-icon">🔄</div>
+                            <div class="temp-value" id="batteryCurrent">-2.5A</div>
+                            <div class="temp-label">Current</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Controls Panel -->
+        <aside class="controls-panel">
+            <!-- Navigation Data -->
+            <section class="control-section">
+                <h3 class="control-title">Navigation</h3>
+                <div class="data-grid">
+                    <div class="data-item">
+                        <div class="data-label">Speed</div>
+                        <div class="data-value" id="speedDisplay">0.0<span class="data-unit">kt</span></div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Depth</div>
+                        <div class="data-value" id="depth">15.2<span class="data-unit">m</span></div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Course</div>
+                        <div class="data-value" id="course">045<span class="data-unit">°</span></div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Distance</div>
+                        <div class="data-value" id="distance">2.4<span class="data-unit">nm</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Engine Data -->
+            <section class="control-section">
+                <h3 class="control-title">Engine</h3>
+                <div class="data-grid">
+                    <div class="data-item">
+                        <div class="data-label">RPM</div>
+                        <div class="data-value" id="engineRPM">0</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Hours</div>
+                        <div class="data-value" id="engineHours">1250<span class="data-unit">h</span></div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Oil Pressure</div>
+                        <div class="data-value" id="oilPressure">35<span class="data-unit">PSI</span></div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Fuel Flow</div>
+                        <div class="data-value" id="fuelFlow">0.0<span class="data-unit">L/h</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Environmental Data -->
+            <section class="control-section">
+                <h3 class="control-title">Environment</h3>
+                <div class="data-grid">
+                    <div class="data-item">
+                        <div class="data-label">Wind Speed</div>
+                        <div class="data-value" id="windSpeed">12<span class="data-unit">kt</span></div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Wind Dir</div>
+                        <div class="data-value" id="windDirection">NE</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Pressure</div>
+                        <div class="data-value" id="pressure">1013<span class="data-unit">mb</span></div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Fuel Level</div>
+                        <div class="data-value" id="fuelLevel">85<span class="data-unit">%</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- System Status -->
+            <section class="control-section">
+                <h3 class="control-title">System Status</h3>
+                <div class="status-grid">
+                    <div class="status-item">
+                        <div class="status-icon" id="engineStatus" style="background: var(--danger);"></div>
+                        <span class="status-text">Engine</span>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-icon" id="autopilotStatus" style="background: var(--danger);"></div>
+                        <span class="status-text">Autopilot</span>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-icon" id="anchorStatus" style="background: var(--danger);"></div>
+                        <span class="status-text">Anchor</span>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-icon" id="navigationStatus" style="background: var(--success);"></div>
+                        <span class="status-text">Navigation</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Controls -->
+            <section class="control-section">
+                <h3 class="control-title">Controls</h3>
+                <div class="control-buttons">
+                    <button class="control-btn" id="engineBtn">Start Engine</button>
+                    <button class="control-btn" id="autopilotBtn">Autopilot</button>
+                    <button class="control-btn danger" id="emergencyBtn">Emergency</button>
+                </div>
+            </section>
+        </aside>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="boat-silhouette floating">
+                <img src="./Imagenes/Bote.png" alt="Boat" style="width: 100%; height: auto; filter: brightness(0) invert(1) opacity(0.6);">
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+    <script src="/js/main.js"></script>
+</body>
+</html>
