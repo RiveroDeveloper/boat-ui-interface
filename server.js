@@ -6,12 +6,17 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.static('public'));
 app.use(express.static('templates'));
 app.use('/css', express.static('Clases Css'));
 app.use('/js', express.static('Clases JavaScript'));
+
+// Serve the main interface at root
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/templates/index.html');
+});
 
 // Enhanced boat data simulation
 class BoatDataSimulator {
