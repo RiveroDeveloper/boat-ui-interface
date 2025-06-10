@@ -4,6 +4,12 @@ A modern, real-time boat monitoring and control interface with comprehensive dat
 
 ![SERENA Interface](https://img.shields.io/badge/Status-Active-brightgreen) ![Node.js](https://img.shields.io/badge/Node.js-v14+-blue) ![License](https://img.shields.io/badge/License-MIT-green)
 
+## 🚀 Live Demo
+
+**[🌐 Access SERENA Live Interface](https://serena-boat-interface.onrender.com/)**
+
+Experience the full boat monitoring system with real-time data simulation, interactive controls, and professional marine interface.
+
 ## 🚤 Features
 
 ### **Real-Time Monitoring**
