@@ -1,16 +1,16 @@
-# ⚓ SERENA - Advanced Boat Interface System
+# SERENA - Advanced Boat Interface System
 
 A modern, real-time boat monitoring and control interface with comprehensive data simulation. SERENA provides a professional-grade dashboard for monitoring navigation, engine parameters, electrical systems, environmental conditions, and boat controls.
 
 ![SERENA Interface](https://img.shields.io/badge/Status-Active-brightgreen) ![Node.js](https://img.shields.io/badge/Node.js-v14+-blue) ![License](https://img.shields.io/badge/License-MIT-green)
 
-## 🚀 Live Demo
+## Live Demo
 
-**[🌐 Access SERENA Live Interface](https://serena-boat-interface.onrender.com/)**
+**[ Access SERENA Live Interface](https://serena-boat-interface.onrender.com/)**
 
 Experience the full boat monitoring system with real-time data simulation, interactive controls, and professional marine interface.
 
-## 🚤 Features
+## Features
 
 ### **Real-Time Monitoring**
 - **GPS Navigation**: Live position tracking with interactive map
@@ -32,7 +32,7 @@ Experience the full boat monitoring system with real-time data simulation, inter
 - **Dynamic Responses**: Systems respond realistically to controls
 - **Environmental Simulation**: Weather and water conditions
 
-## 🛠️ Installation
+## Installation
 
 ### Prerequisites
 - Node.js (v14 or higher)
@@ -41,23 +41,23 @@ Experience the full boat monitoring system with real-time data simulation, inter
 ### Quick Start
 
 1. **Clone the repository**
-   ```bash
-   git clone https://github.com/your-username/serena-boat-interface.git
-   cd serena-boat-interface
-   ```
+ ```bash
+ git clone https://github.com/your-username/serena-boat-interface.git
+ cd serena-boat-interface
+ ```
 
 2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+ ```bash
+ npm install
+ ```
 
 3. **Start the server**
-   ```bash
-   npm start
-   ```
+ ```bash
+ npm start
+ ```
 
 4. **Access the interface**
-   Open your browser and navigate to: `http://localhost:3000`
+ Open your browser and navigate to: `http://localhost:3000`
 
 ### Development Mode
 For development with auto-restart:
@@ -65,7 +65,7 @@ For development with auto-restart:
 npm run dev
 ```
 
-## 🎮 Usage
+## Usage
 
 ### **Navigation Panel**
 - View real-time GPS position on interactive map
@@ -91,26 +91,26 @@ npm run dev
 - **Emergency Stop**: Immediate engine shutdown and speed reduction
 - **Data Monitoring**: Comprehensive real-time data display
 
-## 🏗️ Architecture
+## Architecture
 
 ### **Backend (Node.js + Express)**
 ```
-server.js                 # Main server file
-├── BoatDataSimulator     # Comprehensive boat data simulation
-├── Express Server        # Static file serving and API endpoints
-├── Socket.io Server      # Real-time WebSocket communication
-└── Control Handlers      # Boat control command processing
+server.js # Main server file
+ BoatDataSimulator # Comprehensive boat data simulation
+ Express Server # Static file serving and API endpoints
+ Socket.io Server # Real-time WebSocket communication
+ Control Handlers # Boat control command processing
 ```
 
 ### **Frontend (Vanilla JS + CSS)**
 ```
 templates/
-├── index.html           # Main interface template
+ index.html # Main interface template
 Clases Css/
-├── styles.css          # Modern UI styling with CSS Grid
-└── fonts.css           # Font configurations
+ styles.css # Modern UI styling with CSS Grid
+ fonts.css # Font configurations
 Clases JavaScript/
-└── main.js             # Main interface controller
+ main.js # Main interface controller
 ```
 
 ### **Data Flow**
@@ -120,7 +120,7 @@ Clases JavaScript/
 4. **User Controls** send commands back to server
 5. **Simulation responds** to control inputs realistically
 
-## 📊 Simulated Data Parameters
+## Simulated Data Parameters
 
 ### **GPS & Navigation**
 - Latitude/Longitude coordinates
@@ -153,7 +153,7 @@ Clases JavaScript/
 - Fuel consumption rate
 - Estimated range
 
-## 🎨 Design Features
+## Design Features
 
 ### **Modern UI Elements**
 - **Glass-morphism**: Translucent panels with backdrop blur
@@ -172,11 +172,11 @@ Clases JavaScript/
 - **Data Display**: JetBrains Mono (monospace)
 - **Responsive sizing**: Scales with viewport
 
-## 🔧 Configuration
+## Configuration
 
 ### **Server Configuration**
 ```javascript
-const PORT = 3000;  // Server port
+const PORT = 3000; // Server port
 ```
 
 ### **Simulation Parameters**
@@ -189,52 +189,52 @@ Modify `BoatDataSimulator` class in `server.js`:
 ### **Update Frequency**
 ```javascript
 setInterval(() => {
-  // Update frequency: 1000ms (1 second)
+ // Update frequency: 1000ms (1 second)
 }, 1000);
 ```
 
-## 🚀 Development
+## Development
 
 ### **Adding New Features**
 
 1. **New Data Parameters**:
-   - Add to `BoatDataSimulator` class
-   - Update frontend display logic
-   - Add UI elements in HTML
+ - Add to `BoatDataSimulator` class
+ - Update frontend display logic
+ - Add UI elements in HTML
 
 2. **New Controls**:
-   - Add button/control in HTML
-   - Add event listener in `main.js`
-   - Add server handler in `server.js`
+ - Add button/control in HTML
+ - Add event listener in `main.js`
+ - Add server handler in `server.js`
 
 3. **New Panels**:
-   - Create new panel HTML structure
-   - Add navigation button
-   - Update panel switching logic
+ - Create new panel HTML structure
+ - Add navigation button
+ - Update panel switching logic
 
 ### **File Structure**
 ```
 serena-boat-interface/
-├── server.js                    # Main server application
-├── package.json                 # Node.js dependencies and scripts
-├── README.md                    # This file
-├── templates/
-│   ├── index.html              # Main interface template
-│   ├── temperature.html        # Temperature panel (legacy)
-│   └── batteries.html          # Battery panel (legacy)
-├── Clases Css/
-│   ├── styles.css              # Main stylesheet
-│   └── fonts.css               # Font definitions
-├── Clases JavaScript/
-│   ├── main.js                 # Main interface controller
-│   ├── index.js                # Legacy time/speed functions
-│   ├── map.js                  # Legacy map functions
-│   └── batteries.js            # Legacy battery functions
-├── templates/Imagenes/         # Interface icons and images
-└── public/                     # Static assets (served by Express)
+ server.js # Main server application
+ package.json # Node.js dependencies and scripts
+ README.md # This file
+ templates/
+ index.html # Main interface template
+ temperature.html # Temperature panel (legacy)
+ batteries.html # Battery panel (legacy)
+ Clases Css/
+ styles.css # Main stylesheet
+ fonts.css # Font definitions
+ Clases JavaScript/
+ main.js # Main interface controller
+ index.js # Legacy time/speed functions
+ map.js # Legacy map functions
+ batteries.js # Legacy battery functions
+ templates/Imagenes/ # Interface icons and images
+ public/ # Static assets (served by Express)
 ```
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
@@ -242,11 +242,11 @@ serena-boat-interface/
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🔗 Technologies Used
+## Technologies Used
 
 - **Backend**: Node.js, Express.js, Socket.io
 - **Frontend**: Vanilla JavaScript, CSS3, HTML5
