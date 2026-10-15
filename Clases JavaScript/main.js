@@ -36,9 +36,9 @@ class BoatInterface {
       touchZoom: true
     }).setView([40.7128, -74.0060], 15);
 
-    // Add map tiles with dark theme
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      attribution: '© OpenStreetMap contributors, © CARTO',
+    // Add map tiles with dark theme (OpenStreetMap - free, no API key required)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       maxZoom: 19
     }).addTo(this.map);
 
